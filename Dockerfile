@@ -7,8 +7,6 @@
 
 FROM gitlab-registry.cern.ch/invenio/base:python2-xrootd
 
-RUN xrootd -v
-
 RUN yum install -y \
     epel-release \
     openldap-devel \
