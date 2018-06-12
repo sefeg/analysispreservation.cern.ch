@@ -5,36 +5,7 @@
 # CERN Analysis Preservation is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
-FROM gitlab-registry.cern.ch/invenio/base:python2-xrootd
-
-RUN yum install -y \
-    epel-release \
-    openldap-devel \
-    gpgme-devel \
-    libassuan-devel \
-    btrfs-progs-devel \
-    device-mapper-devel \
-    ostree-devel \
-    go-md2man
-
-ENV GO_VERSION=1.9.1 \
-    GOROOT=/goroot \
-    GOPATH=/gopath
-
-ENV PATH $PATH:$GOROOT/bin:$GOPATH/bin
-
-RUN yum install -y -q curl build-essential ca-certificates git mercurial bzr
-
-
-RUN mkdir /goroot && curl https://storage.googleapis.com/golang/go${GO_VERSION}.linux-amd64.tar.gz | tar xvzf - -C /goroot --strip-components=1 && \
-    mkdir /gopath
-
-# Clean after ourselves:
-RUN yum clean -y all
-
-RUN git clone https://github.com/projectatomic/skopeo $GOPATH/src/github.com/projectatomic/skopeo
-
-RUN cd $GOPATH/src/github.com/projectatomic/skopeo && make binary-local && make docs && make install
+FROM gitlab-registry.cern.ch/analysispreservation/base:python2-xrootd-go
 
 # Install Invenio
 ENV WORKING_DIR=/opt/cap
@@ -58,7 +29,8 @@ RUN python -m site --user-site
 # Install/create static files
 RUN mkdir -p ${INVENIO_INSTANCE_PATH}
 
-RUN pip install --upgrade setuptools wheel pip uwsgi uwsgitop uwsgi-tools
+RUN pip install --upgrade setuptools wheel uwsgi uwsgitop uwsgi-tools
+RUN pip install --upgrade pip==9.0.1
 
 # RUN if [ "$DEBUG" = "True" ]; then pip install -r requirements-devel.txt; fi;
 RUN pip install -r requirements-local-forks.txt
