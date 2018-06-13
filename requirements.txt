@@ -17,7 +17,7 @@ billiard==3.5.0.3         # via celery
 binaryornot==0.4.4        # via cookiecutter
 bleach==2.1.3             # via invenio-records-rest
 blinker==1.4              # via flask-debugtoolbar, flask-mail, flask-principal, invenio-base, invenio-oauthclient, invenio-records
-celery==4.2.0             # via flask-celeryext
+celery==4.1.1             # via flask-celeryext
 certifi==2018.4.16        # via requests
 cffi==1.11.5              # via cryptography
 chardet==3.0.4            # via binaryornot, requests
