@@ -96,6 +96,9 @@ install_requires = [
     'invenio-query-parser>=0.3.0',
     'invenio[{db},{es},base,auth,metadata]~={version}'.format(
         db=DATABASE, es=ELASTICSEARCH, version=INVENIO_VERSION),
+    'uWSGI==2.0.17',
+    'uwsgi-tools==1.1.1',
+    'uwsgitop==0.10',
 ]
 
 packages = find_packages()
