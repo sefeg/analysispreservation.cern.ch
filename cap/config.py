@@ -452,24 +452,27 @@ SEARCH_UI_JSTEMPLATE_RESULTS = 'templates/cap_search_ui/results.html'
 # SEARCH_UI_JSTEMPLATE_FACETS = "templates/cap_search_ui/facets.html"
 
 #: Default ElasticSearch hosts
-params = dict(
-    port=os.environ.get('ELASTICSEARCH_PORT', 443),
-    http_auth=(
-        os.environ.get('ELASTICSEARCH_USER', None),
-        os.environ.get('ELASTICSEARCH_PASSWORD', None)
-    ),
-    use_ssl=True,
-    verify_certs=False,
-)
-
-SEARCH_ELASTIC_HOSTS = []
-
-if os.environ.get('ELASTICSEARCH_HOST', None):
-    SEARCH_ELASTIC_HOSTS.append(
-        dict(host=os.environ.get('ELASTICSEARCH_HOST', None), **params),
+es_user = os.environ.get('ELASTICSEARCH_USER')
+es_password = os.environ.get('ELASTICSEARCH_PASSWORD')
+if es_user and es_password:
+    es_params = dict(
+        http_auth=(es_user, es_password),
+        use_ssl=str(os.environ.get('ELASTICSEARCH_USE_SSL')).lower() == 'true',
+        verify_certs=str(
+            os.environ.get('ELASTICSEARCH_VERIFY_CERTS')).lower() == 'true',
+        url_prefix=os.environ.get('ELASTICSEARCH_URL_PREFIX', ''),
     )
+else:
+    es_params = {}
 
-SEARCH_ELASTIC_HOSTS.append("localhost:9200")
+SEARCH_ELASTIC_HOSTS = [
+    dict(
+        host=os.environ.get('ELASTICSEARCH_HOST', 'localhost'),
+        port=int(os.environ.get('ELASTICSEARCH_PORT', '9200')),
+        **es_params
+    )
+]
+
 
 #: Search query enhancers
 SEARCH_QUERY_ENHANCERS = [
