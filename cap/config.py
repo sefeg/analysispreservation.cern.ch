@@ -452,7 +452,24 @@ SEARCH_UI_JSTEMPLATE_RESULTS = 'templates/cap_search_ui/results.html'
 # SEARCH_UI_JSTEMPLATE_FACETS = "templates/cap_search_ui/facets.html"
 
 #: Default ElasticSearch hosts
-SEARCH_ELASTIC_HOSTS = ["localhost:9200"]
+params = dict(
+    port=os.environ.get('ELASTICSEARCH_PORT', 443),
+    http_auth=(
+        os.environ.get('ELASTICSEARCH_USER', None),
+        os.environ.get('ELASTICSEARCH_PASSWORD', None)
+    ),
+    use_ssl=True,
+    verify_certs=False,
+)
+
+SEARCH_ELASTIC_HOSTS = []
+
+if os.environ.get('ELASTICSEARCH_HOST', None):
+    SEARCH_ELASTIC_HOSTS.append(
+        dict(host=os.environ.get('ELASTICSEARCH_HOST', None), **params),
+    )
+
+SEARCH_ELASTIC_HOSTS.append("localhost:9200")
 
 #: Search query enhancers
 SEARCH_QUERY_ENHANCERS = [
@@ -481,8 +498,8 @@ BLUEPRINT_NAME = 'cap_theme'
 # =======
 #: CERN OAuth configuration
 CERN_APP_CREDENTIALS = {
-    'consumer_key': os.environ.get('APP_CERN_APP_CREDENTIALS_KEY'),
-    'consumer_secret': os.environ.get('APP_CERN_APP_CREDENTIALS_SECRET')
+    'consumer_key': os.environ.get('INVENIO_CERN_APP_CREDENTIALS_KEY'),
+    'consumer_secret': os.environ.get('INVENIO_CERN_APP_CREDENTIALS_SECRET')
 }
 
 # OAUTHCLIENT_REMOTE_APPS = {'cern': cern.REMOTE_APP}
