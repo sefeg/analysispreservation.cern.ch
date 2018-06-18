@@ -92,6 +92,8 @@ install_requires = [
     # 'invenio-records-rest>=1.0.0',
     # 'invenio-rest[cors]>=1.0.0',
     # 'invenio-search>=1.0.0a9',
+    'urllib3[secure]==1.22',
+    'SQLAlchemy-Continuum==1.3.4',
     'invenio-userprofiles>=1.0.0',
     'invenio-query-parser>=0.3.0',
     'invenio[{db},{es},base,auth,metadata]~={version}'.format(
