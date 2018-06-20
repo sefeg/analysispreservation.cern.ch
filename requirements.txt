@@ -58,6 +58,7 @@ flask==0.12.4
 ftfy==4.4.3               # via invenio-records-rest
 functools32==3.2.3.post2  # via invenio-jsonschemas, jsonschema
 future==0.16.0            # via cookiecutter, invenio-accounts, invenio-oauth2server
+fs==0.5.4
 html5lib==1.0.1           # via bleach, ftfy
 idna==2.6                 # via cryptography, requests, urllib3
 infinity==1.4             # via intervals
