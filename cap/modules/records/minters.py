@@ -26,13 +26,45 @@
 
 from __future__ import absolute_import, print_function
 
-from invenio_pidstore.providers.recordid import RecordIdProvider
+import random
+import string
+
+from invenio_pidstore.models import PersistentIdentifier
+from invenio_pidstore.errors import PIDDoesNotExistError
+from .providers import RecordUUIDProvider
 
 
 def cap_record_minter(record_uuid, data):
     """Mint record identifiers."""
-    assert 'recid' not in data
-    provider = RecordIdProvider.create(
-        object_type='rec', object_uuid=record_uuid)
-    data['recid'] = int(provider.pid.pid_value)
+    assert 'control_number' not in data
+    pid_value = generate_pid(data)
+    provider = RecordUUIDProvider.create(
+        pid_type='recid',
+        pid_value=pid_value,
+        object_type='rec',
+        object_uuid=record_uuid)
+    data['control_number'] = provider.pid.pid_value
     return provider.pid
+
+
+def generate_pid(data):
+    """CAP Pid generator."""
+    while True:
+        pid_value = random_pid(data['_experiment'])
+        try:
+            PersistentIdentifier.get('recid', pid_value)
+        except PIDDoesNotExistError:
+            return pid_value
+
+
+def random_pid(experiment):
+    """Generates a random pid value for experiments."""
+    def _generate_random_string(length):
+        """Random string generator."""
+        chars = string.lowercase + string.digits
+        return ''.join((random.choice(chars)) for x in range(length))
+
+    return 'CAP.{}.{}.{}'.format(
+        experiment,
+        _generate_random_string(4),
+        _generate_random_string(4))

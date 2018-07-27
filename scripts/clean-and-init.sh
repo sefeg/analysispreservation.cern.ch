@@ -36,6 +36,7 @@ redis-cli flushall
 # Init and create db and indexes
 cap db init
 cap db create
+cap fixtures schemas
 cap index init
 
 # Create location for files
