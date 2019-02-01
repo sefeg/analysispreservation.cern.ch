@@ -55,6 +55,7 @@ class Header extends React.Component {
         >
           <Title style={{ fontWeight: "300" }} align="end">
             <Anchor
+              style={{ color: "white" }}
               href="#"
               path="/"
               label={config.project.name || "Project Name"}

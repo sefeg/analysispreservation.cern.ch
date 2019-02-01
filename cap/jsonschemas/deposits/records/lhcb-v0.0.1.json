@@ -200,6 +200,9 @@
       "_experiment": {
         "type": "string"
       },
+      "_achievements": {
+        "type": "string"
+      },
       "_access": {
         "$ref":
           "https://analysispreservation.cern.ch/schemas/deposits/common/access-v0.0.1.json"

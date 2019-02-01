@@ -10,7 +10,8 @@ const initialState = Map({
     user_drafts: [],
     user_drafts_count: 0,
     user_published_count: 0,
-    user_count: 0
+    user_count: 0,
+    user_drafts_achievements: []
   }
 });
 

@@ -77,6 +77,7 @@ PRESERVE_FIELDS = (
     '_deposit',
     '_buckets',
     '_files',
+    '_achievements',
     '_experiment',
     '_access',
     'general_title',
@@ -133,6 +134,7 @@ class CAPDeposit(Deposit):
             '_deposit',
             '_access',
             '_experiment',
+            '_achievements',
             'general_title',
             '$schema'
         )
@@ -157,6 +159,7 @@ class CAPDeposit(Deposit):
             '/_access',
             '/_files',
             '/_experiment',
+            '/_achievements',
             '/$schema',
         )
 
@@ -453,6 +456,15 @@ class CAPDeposit(Deposit):
             filepath = '/'.join(info[1:])
         return {'filepath': filepath, 'filename': filename, 'branch': branch}
 
+    def _set_achievements(self):
+
+        #the following leads to TransportError index Why?
+        #self['_achievements'] = deepcopy(EMPTY_ACHIEVEMENTS_OBJECT)
+        #self['_achievements']['fundamental'] = '2'
+        #self['_achievements']['popular'] = '3'
+        self['_achievements'] = "3" #get actual data from DB
+        #self.commit()
+
     def _set_experiment(self):
         schema = Schema.get_by_fullpath(self['$schema'])
         self['_experiment'] = schema.experiment
@@ -515,6 +527,7 @@ class CAPDeposit(Deposit):
         deposit = super(CAPDeposit, cls).create(data, id_=id_)
         deposit._create_buckets()
         deposit._set_experiment()
+        #deposit._set_achievements()
         deposit._init_owner_permissions(owner)
 
         deposit.commit()

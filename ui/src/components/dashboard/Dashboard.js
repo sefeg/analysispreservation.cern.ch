@@ -14,9 +14,100 @@ import Tile from "grommet/components/Tile";
 import List from "grommet/components/List";
 import ListItem from "grommet/components/ListItem";
 
+import Notification from "../notifications/Notification";
+import Image from "grommet/components/Image";
+
 import { withRouter } from "react-router-dom";
 import { fetchDashboard } from "../../actions/dashboard";
 import ListPlaceholder from "grommet-addons/components/ListPlaceholder";
+
+function AchievementTile(props) {
+  return (
+    <Tile pad="medium" basis="1/3">
+      <Box pad="small">
+        <Image
+          style={{ width: 55 }}
+          src={props.image_src}
+          margin="large"
+          data-tip={props.emptyMessage}
+        />
+      </Box>
+
+      <Box>
+        <Heading
+          tag="h5"
+          uppercase={true}
+          align="center"
+          justify="center"
+          data-tip={props.emptyMessage}
+        >
+          {props.header}
+        </Heading>
+
+        <ReactTooltip />
+        <List>
+          {props.items.map((item, index) => {
+            let metadata = item.metadata;
+            let id = item.id;
+            var text = "";
+
+            return (
+              <ListItem
+                textAlign="center"
+                justify="center"
+                key={`${item.id}-${index}`}
+              >
+                <Anchor
+                  path={`${props.urlDetailed}/${id}`}
+                  style={{
+                    "padding-right": "10px",
+                    textDecoration: "none",
+                    color: "black"
+                  }}
+                >
+                  {/*{Object.keys(metadata).forEach(function(key) {
+                    var current = metadata[key];
+
+                    if (typeof current == "object") {
+                      text = text + key + ": ";
+
+                      Object.keys(current).forEach(function(key2) {
+                        var current2 = current[key2];
+
+                        text = text + key2 + "; ";
+                      });
+                    } else {
+                      text = text + "." + key + ". ";
+                    }
+                  })}
+                  {text}*/}
+
+                  {metadata.general_title || id}
+                </Anchor>
+
+                {props.singleAchievement == "true" ? (
+                  <Image style={{ width: 25 }} src={props.image_src} />
+                ) : (
+                  Array.from(Array(metadata._achievements)).map(() => (
+                    <Image style={{ width: 25 }} src={props.image_src} />
+                  ))
+                )}
+              </ListItem>
+            );
+          })}
+        </List>
+        <Box align="center" margin={{ horizontal: "medium" }}>
+          <Anchor
+            path={props.urlMore || "/search"}
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <MoreIcon />
+          </Anchor>
+        </Box>
+      </Box>
+    </Tile>
+  );
+}
 
 function DashboardList(props) {
   return (
@@ -94,7 +185,53 @@ class Dashboard extends React.Component {
           wrap={true}
           justify="center"
         />
+
         <Tiles full={true}>
+          <AchievementTile
+            image_src="https://i.ibb.co/b3tVxG6/popular.png"
+            items={this.props.results.user_drafts_achievements}
+            singleAchievement="false"
+            header="Popular"
+            urlDetailed="/drafts"
+            urlMore={`/drafts?q=created_by:${
+              this.props.currentUserId
+            }&status=published`}
+            emptyMessage="Popular analyses in your collaboration. Popularity is based on view count."
+          />
+          <AchievementTile
+            image_src="https://i.ibb.co/HYxfm1R/Training.png"
+            items={this.props.results.user_drafts}
+            singleAchievement="false"
+            header="Training"
+            urlDetailed="/drafts"
+            urlMore={`/drafts?q=created_by:${
+              this.props.currentUserId
+            }&status=draft`}
+            emptyMessage="Lists analyses that your colleagues from CMS found particularly suitable for training purposes."
+          />
+          {/*<AchievementTile
+              image_src="https://i.ibb.co/ZffHgyF/Reusable.png"
+              items={this.props.results.user_drafts}
+              singleAchievement="true"
+              header="Reusable"
+              urlDetailed="/drafts"
+              urlMore={`/search?q=created_by:${
+                this.props.currentUserId
+              }&status=published`}
+              emptyMessage="Lists your collaborations' analyses that have fulfilled the reusability criteria."
+            />*/}
+          <AchievementTile
+            image_src="https://i.ibb.co/rwdhwRx/Fundamental.png"
+            items={this.props.results.user_drafts}
+            singleAchievement="false"
+            header="Fundamental"
+            urlDetailed="/drafts"
+            urlMore={`/drafts?q=created_by:${
+              this.props.currentUserId
+            }&status=draft`}
+            emptyMessage="Lists analyses that have been cloned particularly often within your collaboration."
+          />
+
           <Tile pad="large" basis="1/3">
             <DashboardList
               items={this.props.results.published_by_collab}
@@ -167,6 +304,14 @@ class Dashboard extends React.Component {
             />
           </Tile>
         </Tiles>
+        <Notification
+          messageTitle="Congratulations!"
+          message="Your analysis 'Search for 3-lepton flavor in BSM models' has been awarded the Popularity badge."
+          displayActionButton={true}
+          imageURL="https://i.ibb.co/b3tVxG6/popular.png"
+          actionPath="/drafts/79fdc896151a497f9bce5db03e84fd62"
+          actionLabel="Show"
+        />
       </Box>
     );
   }

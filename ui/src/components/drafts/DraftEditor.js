@@ -26,6 +26,7 @@ const transformSchema = schema => {
     "$ana_type",
     "$schema",
     "general_title",
+    "_achievements",
     "_experiment",
     "control_number"
   ];

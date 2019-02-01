@@ -253,6 +253,11 @@ RECORDS_REST_FACETS = {
                     'field': 'cadi_status'
                 }
             },
+	        'facet_achievements': {
+                'terms': {
+                    'field': 'achievements'
+                }
+            },
             'facet_publication_status': {
                 'terms': {
                     'field': 'publication_status.keyword'
@@ -296,6 +301,7 @@ RECORDS_REST_FACETS = {
             'type': terms_filter('_type'),
             'status': terms_filter('status.keyword'),
             'cadi_status': terms_filter('cadi_status'),
+            'achievements': terms_filter('achievements'),
             'publication_status': terms_filter('publication_status.keyword'),
             'conference': terms_filter('conference'),
             'physics_objects': nested_filter(
@@ -319,6 +325,11 @@ RECORDS_REST_FACETS = {
             'facet_cadi_status': {
                 'terms': {
                     'field': 'cadi_status'
+                }
+            },
+            'facet_achievements': {
+                'terms': {
+                    'field': 'achievements'
                 }
             },
             'facet_publication_status': {
@@ -363,6 +374,7 @@ RECORDS_REST_FACETS = {
         'post_filters': {
             'type': terms_filter('_type'),
             'cadi_status': terms_filter('cadi_status'),
+            'achievements': terms_filter('achievements'),
             'publication_status': terms_filter('publication_status.keyword'),
             'conference': terms_filter('conference'),
             'physics_objects': nested_filter(

@@ -96,6 +96,7 @@ def dashboard():
     user_drafts = ds.get_user_deposits().execute().hits.hits
     user_drafts_count = ds.get_user_deposits().count()
     shared_with_user = ds.get_shared_with_user().execute().hits.hits
+    user_drafts_achievements = ds.get_user_deposits().execute().hits.hits
 
     return jsonify({
         'published_by_collab': serialize_records(published_by_collab[:4]),
@@ -104,5 +105,6 @@ def dashboard():
         'shared_with_user': serialize_deposits(shared_with_user[:4]),
         'user_drafts_count': user_drafts_count,
         'user_published_count': user_published_count,
-        'user_count': user_drafts_count + user_published_count
+        'user_count': user_drafts_count + user_published_count,
+        'user_drafts_achievements': serialize_deposits(user_drafts_achievements[:4])
     })
