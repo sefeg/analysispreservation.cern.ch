@@ -59,11 +59,15 @@ class Header extends React.Component {
               href="#"
               path="/"
               label={config.project.name || "Project Name"}
-              style={{ textDecoration: "none" }}
+              style={{ textDecoration: "none", color: "hsla(0,0%,100%,.85)" }}
             />
             <Label
               size="small"
-              style={{ marginTop: "-10px", marginLeft: "-5px" }}
+              style={{
+                marginTop: "-10px",
+                marginLeft: "-5px",
+                color: "hsla(0,0%,100%,.85)"
+              }}
             >
               <b>BETA</b>
             </Label>

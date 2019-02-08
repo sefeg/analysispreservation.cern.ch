@@ -15,7 +15,7 @@ class GrommetFooter extends React.Component {
           justify="center"
           pad={{ between: "medium" }}
         >
-          <Paragraph margin="none" style={{ color: "white" }}>
+          <Paragraph margin="none" style={{ color: "hsla(0,0%,100%,.85)" }}>
             Copyright 2018 © CERN. Created & Hosted by CERN. Powered by Invenio
             Software.
           </Paragraph>
@@ -23,13 +23,17 @@ class GrommetFooter extends React.Component {
             <Anchor
               label="Contact"
               href="mailto:analysis-preservation-support@cern.ch"
-              style={{ color: "white" }}
+              style={{ color: "hsla(0,0%,100%,.85)" }}
             />
-            <Anchor label="About" path="/about" style={{ color: "white" }} />
+            <Anchor
+              label="About"
+              path="/about"
+              style={{ color: "hsla(0,0%,100%,.85)" }}
+            />
             <Anchor
               label="Search Tips"
               path="/search-tips"
-              style={{ color: "white" }}
+              style={{ color: "hsla(0,0%,100%,.85)" }}
             />
           </Menu>
         </Box>

@@ -33,7 +33,7 @@ class DepositFilesList extends React.Component {
 
   render() {
     return (
-      <span>
+      <span style={{ height: "-webkit-fill-available" }}>
         <FileManager
           item_id={this.props.item_id}
           files={this.props.files}

@@ -209,7 +209,9 @@ class Dashboard extends React.Component {
             }&status=draft`}
             emptyMessage="Lists analyses that your colleagues from CMS found particularly suitable for training purposes."
           />
-          {/*<AchievementTile
+          {/* https://i.ibb.co/pzt1dm9/innovative.png
+
+            <AchievementTile
               image_src="https://i.ibb.co/ZffHgyF/Reusable.png"
               items={this.props.results.user_drafts}
               singleAchievement="true"

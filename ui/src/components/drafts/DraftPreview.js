@@ -13,6 +13,9 @@ import { fetchAndAssignSchema } from "../../actions/common";
 import JSONSchemaPreviewer from "./form/JSONSchemaPreviewer";
 import Sidebar from "./components/DepositSidebar";
 
+import BadgeHeader from "./components/BadgeHeader";
+import BadgeVoteContainer from "./components/BadgeVoteContainer";
+
 const transformSchema = schema => {
   const schemaFieldsToRemove = [
     "_access",
@@ -79,11 +82,15 @@ class DraftPreview extends React.Component {
         ) : null}
 
         <Box direction="row" flex={true} wrap={false}>
-          <Sidebar draftId={this.props.draft_id} />
+          <Box direction="column">
+            <Sidebar draftId={this.props.draft_id} />
+            <BadgeVoteContainer />
+          </Box>
 
           {this.props.schemas && this.props.schemas.schema ? (
             <Box flex={true}>
               <Box pad="medium" colorIndex="light-2" />
+
               <Box flex={true}>
                 <Box flex={false} pad="medium">
                   <JSONSchemaPreviewer

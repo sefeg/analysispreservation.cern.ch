@@ -16,6 +16,7 @@ import SectionHeader from "./SectionHeader";
 import DepositFilesList from "./DepositFilesList";
 
 import { Route } from "react-router-dom";
+import BadgeVoteContainer from "./BadgeVoteContainer";
 
 class DepositSidebar extends React.Component {
   constructor(props) {
