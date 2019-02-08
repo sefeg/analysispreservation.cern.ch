@@ -13,6 +13,8 @@ import { fetchAndAssignSchema } from "../../actions/common";
 import JSONSchemaPreviewer from "./form/JSONSchemaPreviewer";
 import Sidebar from "./components/DepositSidebar";
 
+import BadgeHeaderPreview from "./components/BadgeHeaderPreview";
+
 import BadgeHeader from "./components/BadgeHeader";
 import BadgeVoteContainer from "./components/BadgeVoteContainer";
 
@@ -89,7 +91,9 @@ class DraftPreview extends React.Component {
 
           {this.props.schemas && this.props.schemas.schema ? (
             <Box flex={true}>
-              <Box pad="medium" colorIndex="light-2" />
+              <Box colorIndex="light-2">
+                <BadgeHeaderPreview />
+              </Box>
 
               <Box flex={true}>
                 <Box flex={false} pad="medium">
