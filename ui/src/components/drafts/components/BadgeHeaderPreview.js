@@ -88,7 +88,7 @@ class BadgeHeaderPreview extends React.Component {
               <Box
                 pad={{ horizontal: "none" }}
                 margin={{ horizontal: "xsmall" }}
-                onClick={() => this.closeButtonClicked()}
+                onClick={() => {}}
               >
                 <PrintIcon size="small" margin="small" />
               </Box>
@@ -111,7 +111,7 @@ class BadgeHeaderPreview extends React.Component {
                   Title of this work. Probably a bit longer.
                 </h3>
 
-                <h4 style={{ "margin-bottom": "3px" }}>More suitable ID</h4>
+                <h4 style={{ "margin-bottom": "3px" }}>Suitable ID</h4>
                 <h4 style={{ "margin-bottom": "20px" }}>
                   Keywords: key1; key2; key3.
                 </h4>
