@@ -9,7 +9,9 @@ import Button from "grommet/components/Button";
 import ReactTooltip from "react-tooltip";
 
 class BadgeHeaderPreviewItem extends React.Component {
-  buttonClicked() {}
+  buttonClicked() {
+    this.props.action();
+  }
 
   render() {
     return (

@@ -11,16 +11,11 @@ export default function BadgeHeader(props) {
   return (
     <Box
       direction="row"
-      flex={false}
-      wrap={false}
+      style={{ "align-self": "center" }}
       pad={{ horizontal: "small", vertical: "small" }}
     >
       <BadgeHeaderItem
-        imageURL="https://i.ibb.co/dP34SZM/educational-with-title.png"
-        tooltipText="This badge indicates that ..."
-      />
-      <BadgeHeaderItem
-        imageURL="https://i.ibb.co/Q9nxyV9/fundamental-with-title.png"
+        imageURL="https://i.ibb.co/F8xDnSX/popular-with-title.png"
         tooltipText="This badge indicates that ..."
       />
       <BadgeHeaderItem
@@ -28,13 +23,17 @@ export default function BadgeHeader(props) {
         tooltipText="This badge indicates that ..."
       />
       <BadgeHeaderItem
-        imageURL="https://i.ibb.co/F8xDnSX/popular-with-title.png"
+        imageURL="https://i.ibb.co/Q9nxyV9/fundamental-with-title.png"
         tooltipText="This badge indicates that ..."
       />
       <BadgeHeaderItem
-        imageURL="https://i.ibb.co/xY1cdm6/reusable-with-title.png"
+        imageURL="https://i.ibb.co/dP34SZM/educational-with-title.png"
         tooltipText="This badge indicates that ..."
       />
+      {/*<BadgeHeaderItem
+        imageURL="https://i.ibb.co/xY1cdm6/reusable-with-title.png"
+        tooltipText="This badge indicates that ..."
+      />*/}
     </Box>
   );
 }
