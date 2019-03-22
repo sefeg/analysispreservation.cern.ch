@@ -13,15 +13,13 @@ import {
   PUBLISHED_ITEM_REQUEST,
   PUBLISHED_ITEM_SUCCESS,
   PUBLISHED_ITEM_ERROR,
-  RERUN_PUBLISHED_REQUEST,
-  RERUN_PUBLISHED_SUCCESS,
-  RERUN_PUBLISHED_ERROR,
   RERUN_STATUS_REQUEST,
   RERUN_STATUS_SUCCESS,
   RERUN_STATUS_ERROR,
-  RERUN_OUTPUTS_REQUEST,
-  RERUN_OUTPUTS_SUCCESS,
-  RERUN_OUTPUTS_ERROR
+  RERUN_CREATE_WORKFLOW_SUCCESS,
+  RERUN_GET_WORKFLOWS_REQUEST,
+  RERUN_GET_WORKFLOWS_SUCCESS,
+  RERUN_GET_WORKFLOWS_ERROR
 } from "../actions/published";
 
 const initialState = Map({
@@ -36,6 +34,8 @@ const initialState = Map({
     loading: false,
     error: null
   }),
+  runs: Map(),
+  status: Map(),
   current_run: Map({
     id: null,
     data: null,
@@ -82,39 +82,22 @@ export default function publishedReducer(state = initialState, action) {
       return state
         .setIn(["current_item", "loading"], false)
         .setIn(["current_item", "error"], action.error);
-    case RERUN_PUBLISHED_REQUEST:
-      return state.setIn(["current_run", "loading"], true);
-    // return state.setIn(['current_run', 'error'], false);
-    case RERUN_PUBLISHED_SUCCESS:
-      return state
-        .setIn(["current_run", "loading"], false)
-        .setIn(["current_run", "data"], action.data);
-    case RERUN_PUBLISHED_ERROR:
-      return state
-        .setIn(["current_run", "loading"], false)
-        .setIn(["current_run", "error"], action.error);
     case RERUN_STATUS_REQUEST:
       return state.setIn(["current_run", "loading"], true);
-    // return state.setIn(['current_run', 'error'], false);
     case RERUN_STATUS_SUCCESS:
-      return state
-        .setIn(["current_run", "loading"], false)
-        .setIn(["current_run", "data"], action.data);
+      return state.setIn(["status", action.workflow_id], action.data);
     case RERUN_STATUS_ERROR:
       return state
         .setIn(["current_run", "loading"], false)
         .setIn(["current_run", "error"], action.error);
-    case RERUN_OUTPUTS_REQUEST:
-      return state.setIn(["current_run", "loading"], true);
-    // return state.setIn(['current_run', 'error'], false);
-    case RERUN_OUTPUTS_SUCCESS:
-      return state
-        .setIn(["current_run", "loading"], false)
-        .setIn(["current_run", "outputs"], action.data);
-    case RERUN_OUTPUTS_ERROR:
-      return state
-        .setIn(["current_run", "loading"], false)
-        .setIn(["current_run", "error"], action.error);
+    case RERUN_CREATE_WORKFLOW_SUCCESS:
+      return state.setIn(["runs", action.data.workflow_id], action.data);
+    case RERUN_GET_WORKFLOWS_REQUEST:
+      return state;
+    case RERUN_GET_WORKFLOWS_SUCCESS:
+      return state.setIn(["runs"], Map(action.data));
+    case RERUN_GET_WORKFLOWS_ERROR:
+      return state;
     default:
       return state;
   }

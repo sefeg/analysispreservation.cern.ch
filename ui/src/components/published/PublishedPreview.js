@@ -13,12 +13,11 @@ import FilesPublished from "./components/FilesPublished";
 
 import JSONSchemaPreviewer from "../drafts/form/JSONSchemaPreviewer";
 import SectionHeader from "../drafts/components/SectionHeader";
-import Status from "grommet/components/icons/Status";
 import { EditAnchor } from "../drafts/components/DraftActionsButtons";
 import AnnounceIcon from "grommet/components/icons/base/Announce";
 
-import Anchor from "grommet/components/Anchor";
-import Label from "grommet/components/Label";
+import RunsIndex from "../published/RunsIndex";
+import { Route } from "react-router-dom";
 
 const transformSchema = schema => {
   const schemaFieldsToRemove = [
@@ -45,10 +44,13 @@ const transformSchema = schema => {
 };
 
 class PublishedPreview extends React.Component {
-  componentDidMount() {
-    let { id } = this.props.match.params;
-    this.props.getPublishedItem(id);
-  }
+  _discoverSchema = item => {
+    let type;
+    return item.$ana_type
+      ? item.$ana_type
+      : ((type = item.$schema.split("/")),
+        type[type.length - 1].replace("-v0.0.1.json", ""));
+  };
 
   render() {
     let item = this.props.item ? this.props.item.metadata : null;
@@ -73,7 +75,7 @@ class PublishedPreview extends React.Component {
                 uppercase={true}
                 action={<EditAnchor draft_id={draft_id} />}
               />
-              <Box flex={true}>
+              <Box flex={true} direction="row" justify="between">
                 <Box flex={false} pad="medium">
                   <JSONSchemaPreviewer
                     formData={item || {}}
@@ -84,6 +86,11 @@ class PublishedPreview extends React.Component {
                     <span />
                   </JSONSchemaPreviewer>
                 </Box>
+                <Route
+                  exact
+                  path={`/published/:id/runs/`}
+                  component={RunsIndex}
+                />
               </Box>
             </Box>
           ) : null}

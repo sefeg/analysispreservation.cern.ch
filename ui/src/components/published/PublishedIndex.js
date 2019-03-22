@@ -6,35 +6,21 @@ import { connect } from "react-redux";
 
 import Box from "grommet/components/Box";
 
-// import PublishedItem from '../published/PublishedItem';
-// import RerunPublished from '../published/RerunPublished';
-// import RerunStatus from '../published/RerunStatus';
-import PublishedPreview from "./PublishedPreview";
-import { Switch, Route } from "react-router-dom";
+import PublishedItemIndex from "./PublishedItemIndex";
+import { Route } from "react-router-dom";
 import { withRouter } from "react-router";
 
-class DraftsIndex extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
+class PublishedIndex extends React.Component {
   render() {
     return (
       <Box flex={true}>
-        <Switch>
-          <Route exact path={`/published/:id`} component={PublishedPreview} />
-          {/*
-          <Route exact path={`/published/:id`} component={PublishedItem}  />
-          <Route path={`/published/:id/rerun`} component={RerunPublished} />
-          <Route path={`/published/:id/status/:workflow_id`} component={RerunStatus} />
-          */}
-        </Switch>
+        <Route path={`/published/:id`} component={PublishedItemIndex} />
       </Box>
     );
   }
 }
 
-DraftsIndex.propTypes = {
+PublishedIndex.propTypes = {
   startDeposit: PropTypes.func
 };
 
@@ -52,5 +38,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  )(DraftsIndex)
+  )(PublishedIndex)
 );

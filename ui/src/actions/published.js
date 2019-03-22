@@ -1,5 +1,5 @@
 import axios from "axios";
-import { replace } from "react-router-redux";
+import { push } from "react-router-redux";
 import { fetchAndAssignSchema } from "./common";
 
 export const PUBLISHED_REQUEST = "PUBLISHED_REQUEST";
@@ -10,17 +10,21 @@ export const PUBLISHED_ITEM_REQUEST = "PUBLISHED_ITEM_REQUEST";
 export const PUBLISHED_ITEM_SUCCESS = "PUBLISHED_ITEM_SUCCESS";
 export const PUBLISHED_ITEM_ERROR = "PUBLISHED_ITEM_ERROR";
 
-export const RERUN_PUBLISHED_REQUEST = "RERUN_PUBLISHED_REQUEST";
-export const RERUN_PUBLISHED_SUCCESS = "RERUN_PUBLISHED_SUCCESS";
-export const RERUN_PUBLISHED_ERROR = "RERUN_PUBLISHED_ERROR";
-
 export const RERUN_STATUS_REQUEST = "RERUN_STATUS_REQUEST";
 export const RERUN_STATUS_SUCCESS = "RERUN_STATUS_SUCCESS";
 export const RERUN_STATUS_ERROR = "RERUN_STATUS_ERROR";
 
-export const RERUN_OUTPUTS_REQUEST = "RERUN_OUTPUTS_REQUEST";
-export const RERUN_OUTPUTS_SUCCESS = "RERUN_OUTPUTS_SUCCESS";
-export const RERUN_OUTPUTS_ERROR = "RERUN_OUTPUTS_ERROR";
+export const RERUN_GET_WORKFLOWS_REQUEST = "RERUN_GET_WORKFLOWS_REQUEST";
+export const RERUN_GET_WORKFLOWS_SUCCESS = "RERUN_GET_WORKFLOWS_SUCCESS";
+export const RERUN_GET_WORKFLOWS_ERROR = "RERUN_GET_WORKFLOWS_ERROR";
+
+export const RERUN_CREATE_WORKFLOW_REQUEST = "RERUN_CREATE_WORKFLOW_REQUEST";
+export const RERUN_CREATE_WORKFLOW_SUCCESS = "RERUN_CREATE_WORKFLOW_SUCCESS";
+export const RERUN_CREATE_WORKFLOW_ERROR = "RERUN_CREATE_WORKFLOW_ERROR";
+
+export const RERUN_START_WORKFLOW_REQUEST = "RERUN_START_WORKFLOW_REQUEST";
+export const RERUN_START_WORKFLOW_SUCCESS = "RERUN_START_WORKFLOW_SUCCESS";
+export const RERUN_START_WORKFLOW_ERROR = "RERUN_START_WORKFLOW_ERROR";
 
 export function publishedRequest() {
   return {
@@ -62,35 +66,16 @@ export function publishedItemError(error) {
   };
 }
 
-export function rerunPublishedRequest() {
-  return {
-    type: RERUN_PUBLISHED_REQUEST
-  };
-}
-
-export function rerunPublishedSuccess(data) {
-  return {
-    type: RERUN_PUBLISHED_SUCCESS,
-    data
-  };
-}
-
-export function rerunPublishedError(error) {
-  return {
-    type: RERUN_PUBLISHED_ERROR,
-    error
-  };
-}
-
 export function rerunStatusRequest() {
   return {
     type: RERUN_STATUS_REQUEST
   };
 }
 
-export function rerunStatusSuccess(data) {
+export function rerunStatusSuccess(workflow_id, data) {
   return {
     type: RERUN_STATUS_SUCCESS,
+    workflow_id,
     data
   };
 }
@@ -102,22 +87,62 @@ export function rerunStatusError(error) {
   };
 }
 
-export function rerunOutputsRequest() {
+export function rerunCreateWorkflowRequest() {
   return {
-    type: RERUN_OUTPUTS_REQUEST
+    type: RERUN_CREATE_WORKFLOW_REQUEST
   };
 }
 
-export function rerunOutputsSuccess(data) {
+export function rerunCreateWorkflowSuccess(data) {
   return {
-    type: RERUN_OUTPUTS_SUCCESS,
+    type: RERUN_CREATE_WORKFLOW_SUCCESS,
     data
   };
 }
 
-export function rerunOutputsError(error) {
+export function rerunCreateWorkflowError(error) {
   return {
-    type: RERUN_OUTPUTS_ERROR,
+    type: RERUN_CREATE_WORKFLOW_ERROR,
+    error
+  };
+}
+
+export function rerunStartWorkflowRequest() {
+  return {
+    type: RERUN_START_WORKFLOW_REQUEST
+  };
+}
+
+export function rerunStartWorkflowSuccess(data) {
+  return {
+    type: RERUN_START_WORKFLOW_SUCCESS,
+    data
+  };
+}
+
+export function rerunStartWorkflowError(error) {
+  return {
+    type: RERUN_START_WORKFLOW_ERROR,
+    error
+  };
+}
+
+export function rerunGetWorkflowsRequest() {
+  return {
+    type: RERUN_GET_WORKFLOWS_REQUEST
+  };
+}
+
+export function rerunGetWorkflowsSuccess(data) {
+  return {
+    type: RERUN_GET_WORKFLOWS_SUCCESS,
+    data
+  };
+}
+
+export function rerunGetWorkflowsError(error) {
+  return {
+    type: RERUN_GET_WORKFLOWS_ERROR,
     error
   };
 }
@@ -155,54 +180,76 @@ export function getPublishedItem(id) {
   };
 }
 
-export function rerunPublished(workflow_id, pid) {
+export function rerunCreateWorkflow(workflow, published_id) {
   return dispatch => {
-    dispatch(rerunPublishedRequest());
+    dispatch(rerunCreateWorkflowRequest());
+    let uri = "/api/reana/create";
 
+    axios
+      .post(uri, {
+        workflow_json: workflow.workflow,
+        workflow_name: workflow.workflow_title,
+        record_id: published_id
+      })
+      .then(response => {
+        dispatch(rerunCreateWorkflowSuccess(response.data));
+        let { workflow_id } = response.data;
+        dispatch(rerunStartWorkflow(workflow_id));
+        dispatch(push(`/published/${published_id}/runs`));
+      })
+      .catch(error => {
+        dispatch(rerunCreateWorkflowError(error));
+      });
+  };
+}
+
+export function rerunStartWorkflow(workflow_id) {
+  return dispatch => {
+    dispatch(rerunStartWorkflowRequest());
     let uri = `/api/reana/start/${workflow_id}`;
 
     axios
       .get(uri)
       .then(response => {
-        dispatch(rerunPublishedSuccess(response.data));
-        dispatch(replace(`/published/${pid}/status/${workflow_id}`));
+        dispatch(rerunStartWorkflowSuccess(response.data));
       })
       .catch(error => {
-        dispatch(rerunPublishedSuccess(error));
+        dispatch(rerunStartWorkflowError(error));
       });
   };
 }
 
-export function getAnalysisStatus(workflow_id) {
+export function rerunGetWorkflows(published_id) {
   return dispatch => {
-    dispatch(rerunStatusRequest());
-
-    let uri = `/api/reana/status/${workflow_id}`;
+    dispatch(rerunGetWorkflowsRequest());
+    let uri = `/api/reana/jobs/${published_id}`;
 
     axios
       .get(uri)
       .then(response => {
-        dispatch(rerunStatusSuccess(response.data));
+        let _jobs = {};
+        response.data.map(job => (_jobs[job.params.reana_id] = job));
+        dispatch(rerunGetWorkflowsSuccess(_jobs));
       })
       .catch(error => {
-        dispatch(rerunStatusError(error));
+        dispatch(rerunGetWorkflowsError(error));
       });
   };
 }
 
-export function getAnalysisOutputs(workflow_id) {
-  return dispatch => {
-    dispatch(rerunOutputsRequest());
+// export function rerunWorkflowStatus(workflow_id) {
+//   return dispatch => {
+//     dispatch(rerunStatusRequest());
 
-    let uri = `/api/reana/status/${workflow_id}/outputs`;
+//     let uri = `/api/reana/status/${workflow_id}`;
 
-    axios
-      .get(uri)
-      .then(response => {
-        dispatch(rerunOutputsSuccess(response.data));
-      })
-      .catch(error => {
-        dispatch(rerunOutputsError(error));
-      });
-  };
-}
+//     axios
+//       .get(uri)
+//       .then(response => {
+//         dispatch(rerunStatusSuccess(workflow_id, response.data));
+//       })
+//       .catch(error => {
+//         dispatch(rerunStatusError(error));
+//       });
+//   };
+// }

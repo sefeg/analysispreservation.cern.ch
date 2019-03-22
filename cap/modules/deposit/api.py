@@ -386,7 +386,7 @@ class CAPDeposit(Deposit):
                                  user,
                                  permissions,
                                  session):
-        """Removes permissions for user for this deposit."""
+        """Remove permissions for user for this deposit."""
         for permission in permissions:
             session.delete(
                 ActionUsers.query.filter(
@@ -443,7 +443,7 @@ class CAPDeposit(Deposit):
             self['_deposit']['owners'] = [owner.id]
 
     def _construct_fileinfo(self, url, type):
-        """Constructs repo name  or file name."""
+        """Construct repo name  or file name."""
         url = url.rstrip('/')
         branch = None
         if type == 'repo':
@@ -615,7 +615,7 @@ def download_repo(pid, url, filename):
 
 
 def task_commit(record, response, filename, total):
-    """Commits file to the record."""
+    """Commit file to the record."""
     record.files[filename].file.set_contents(
         response,
         default_location=record.files.bucket.location.uri,
@@ -629,7 +629,7 @@ def ensure_content_length(
         session=None,
         max_size=FILES_URL_MAX_SIZE or 2**20,
         *args, **kwargs):
-    """Adds Content-Length when no present."""
+    """Add Content-Length when no present."""
     kwargs['stream'] = True
     session = session or requests.Session()
     r = session.request(method, url, *args, **kwargs)
