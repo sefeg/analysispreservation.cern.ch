@@ -8,6 +8,7 @@ import IndexPage from "./index/IndexPage";
 
 import HowToSearchPage from "./about/HowToSearch";
 import AboutPage from "./about/AboutPage";
+import NewBadgeInfoPage from "./about/NewBadgeInfo";
 import noRequireAuth from "./auth/NoAuthorizationRequired";
 
 import Box from "grommet/components/Box";
@@ -36,6 +37,7 @@ class App extends React.Component {
           <Switch id="main-container">
             <Route path="/login" component={noRequireAuth(WelcomePage)} />
             <Route path="/about" component={AboutPage} />
+            <Route path="/newbadge" component={NewBadgeInfoPage} />
             <Route path="/search-tips" component={HowToSearchPage} />
             <Route path="/" component={IndexPage} />
             {/*

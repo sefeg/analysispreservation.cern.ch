@@ -98,7 +98,7 @@
                   "type": "string",
                   "description":
                     "Choose from objects defined in main measurements",
-                  "title": "Physics Object"
+                  "title": "Physics Objects"
                 },
                 "statement": {
                   "type": "string",

@@ -14,8 +14,14 @@ class BadgeHeaderPreviewItem extends React.Component {
   }
 
   render() {
+    var handler = () => this.buttonClicked();
+
+    if (this.props.disableButton) {
+      handler = undefined;
+    }
+
     return (
-      <Button onClick={() => this.buttonClicked()}>
+      <Button onClick={handler}>
         <Image
           style={{
             height: 42,
@@ -36,5 +42,6 @@ export default BadgeHeaderPreviewItem;
 
 BadgeHeaderPreviewItem.propTypes = {
   imageURL: PropTypes.string,
-  tooltipText: PropTypes.string
+  tooltipText: PropTypes.string,
+  disableButton: PropTypes.bool
 };

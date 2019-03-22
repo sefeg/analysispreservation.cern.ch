@@ -8,12 +8,21 @@ import Image from "grommet/components/Image";
 import Heading from "grommet/components/Heading";
 import Anchor from "grommet/components/Anchor";
 
-var text = "A";
-
 const styles = {
-  show: {
+  show_green: {
     opacity: "0.93",
     backgroundColor: "rgb(82,159,79)",
+    transition: "opacity 2s ease-in",
+    position: "absolute",
+    "border-radius": "3px",
+    right: "60px",
+    top: "40px",
+    "box-shadow": "0px 0px 4px 4px #3cc"
+  },
+
+  show_blue: {
+    opacity: "0.93",
+    backgroundColor: "rgb(49,131,188)",
     transition: "opacity 2s ease-in",
     position: "absolute",
     "border-radius": "3px",
@@ -53,18 +62,20 @@ class Notification extends React.Component {
   }
 
   render() {
-    text = text + "b";
-
     var style_visibility = styles.hide;
 
     if (this.state.show == true) {
-      style_visibility = styles.show;
+      if (this.props.showSuccess) {
+        style_visibility = styles.show_green;
+      } else {
+        style_visibility = styles.show_blue;
+      }
     }
 
     return (
       <Box style={style_visibility} direction={"row"} pad={"small"}>
         <Box justify={"center"}>
-          <Image style={{ width: 60 }} src={this.props.imageURL} />
+          <Image style={{ width: 70 }} src={this.props.imageURL} />
         </Box>
 
         <Box
@@ -121,7 +132,8 @@ Notification.propTypes = {
   imageURL: PropTypes.string,
   displayAction: PropTypes.bool,
   actionPath: PropTypes.string,
-  actionLabel: PropTypes.string
+  actionLabel: PropTypes.string,
+  showSuccess: PropTypes.bool
 };
 
 export default Notification;

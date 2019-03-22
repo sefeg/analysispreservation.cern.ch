@@ -23,7 +23,7 @@ import ListPlaceholder from "grommet-addons/components/ListPlaceholder";
 
 function AchievementTile(props) {
   return (
-    <Tile pad="medium" basis="1/3">
+    <Tile pad="medium" basis="1/4">
       <Box pad="small">
         <Image
           style={{ width: 55 }}
@@ -170,9 +170,15 @@ function DashboardList(props) {
   );
 }
 
+var showed_first_notification = false;
+
 class Dashboard extends React.Component {
   componentDidMount() {
     this.props.fetchDashboard();
+  }
+
+  componentWillUnmount() {
+    showed_first_notification = true;
   }
 
   render() {
@@ -196,32 +202,19 @@ class Dashboard extends React.Component {
             urlMore={`/drafts?q=created_by:${
               this.props.currentUserId
             }&status=published`}
-            emptyMessage="Popular analyses in your collaboration. Popularity is based on view count."
+            emptyMessage="Popular analyses in your collaboration. Popularity is based on the number of researchers viewing an analysis."
           />
           <AchievementTile
             image_src="https://i.ibb.co/HYxfm1R/Training.png"
             items={this.props.results.user_drafts}
             singleAchievement="false"
-            header="Training"
+            header="Educational"
             urlDetailed="/drafts"
             urlMore={`/drafts?q=created_by:${
               this.props.currentUserId
             }&status=draft`}
-            emptyMessage="Lists analyses that your colleagues from CMS found particularly suitable for training purposes."
+            emptyMessage="Lists work that is particularly EDUCATIONAL. The award is directly based on the feedback by the members of your collaboration."
           />
-          {/* https://i.ibb.co/pzt1dm9/innovative.png
-
-            <AchievementTile
-              image_src="https://i.ibb.co/ZffHgyF/Reusable.png"
-              items={this.props.results.user_drafts}
-              singleAchievement="true"
-              header="Reusable"
-              urlDetailed="/drafts"
-              urlMore={`/search?q=created_by:${
-                this.props.currentUserId
-              }&status=published`}
-              emptyMessage="Lists your collaborations' analyses that have fulfilled the reusability criteria."
-            />*/}
           <AchievementTile
             image_src="https://i.ibb.co/rwdhwRx/Fundamental.png"
             items={this.props.results.user_drafts}
@@ -231,10 +224,34 @@ class Dashboard extends React.Component {
             urlMore={`/drafts?q=created_by:${
               this.props.currentUserId
             }&status=draft`}
-            emptyMessage="Lists analyses that have been cloned particularly often within your collaboration."
+            emptyMessage="Lists work that is FUNDAMENTAL: Analyses published on CERN Analysis Preservation can be cloned. That way, existing work provides a foundation for future research. Often cloned work receives this award."
           />
 
-          <Tile pad="large" basis="1/3">
+          <AchievementTile
+            image_src="https://i.ibb.co/pzt1dm9/innovative.png"
+            items={this.props.results.user_drafts}
+            singleAchievement="false"
+            header="Innovative"
+            urlDetailed="/drafts"
+            urlMore={`/drafts?q=created_by:${
+              this.props.currentUserId
+            }&status=draft`}
+            emptyMessage="Lists work that is INNOVATIVE. The award is directly based on the feedback by the members of your collaboration."
+          />
+
+          <AchievementTile
+            image_src="https://i.ibb.co/ZffHgyF/Reusable.png"
+            items={this.props.results.user_drafts}
+            singleAchievement="false"
+            header="Reusable"
+            urlDetailed="/drafts"
+            urlMore={`/drafts?q=created_by:${
+              this.props.currentUserId
+            }&status=draft`}
+            emptyMessage="Lists work that is REUSABLE: Every analysis that's re-execution on ReAna can directly be initiated on CERN Analysis Preservation receives this award."
+          />
+
+          <Tile pad="large" basis="1/4">
             <DashboardList
               items={this.props.results.published_by_collab}
               header="published in collaboration"
@@ -243,7 +260,7 @@ class Dashboard extends React.Component {
               emptyMessage="All analyses published on CAP by members of your collaboration."
             />
           </Tile>
-          <Tile pad="large" basis="1/3">
+          <Tile pad="large" basis="1/4">
             <DashboardList
               items={this.props.results.shared_with_user}
               header="shared with you"
@@ -254,7 +271,7 @@ class Dashboard extends React.Component {
               emptyMessage="Draft analyses that your collaborators have given you read/write access to."
             />
           </Tile>
-          <Tile pad="large" basis="1/3">
+          <Tile pad="large" basis="1/4">
             <DashboardList
               items={this.props.results.published_by_collab}
               header="latest from your group"
@@ -263,7 +280,7 @@ class Dashboard extends React.Component {
               emptyMessage="All analyses published on CAP by members of your working group."
             />
           </Tile>
-          <Tile pad="large" basis="1/3">
+          <Tile pad="large" basis="1/4">
             <DashboardList
               items={this.props.results.user_drafts}
               header="your drafts"
@@ -274,7 +291,7 @@ class Dashboard extends React.Component {
               emptyMessage="Your draft analyses. By default, only you can access them, but it is possible to give read/write access to other collaborators."
             />
           </Tile>
-          <Tile pad="medium" basis="1/3">
+          <Tile pad="medium" basis="1/4">
             <AnnotatedMeter
               legend={true}
               type="circle"
@@ -294,7 +311,7 @@ class Dashboard extends React.Component {
               ]}
             />
           </Tile>
-          <Tile pad="large" basis="1/3">
+          <Tile pad="large" basis="1/4">
             <DashboardList
               items={this.props.results.user_published}
               header="published by you"
@@ -306,14 +323,28 @@ class Dashboard extends React.Component {
             />
           </Tile>
         </Tiles>
-        <Notification
-          messageTitle="Congratulations!"
-          message="Your analysis 'Search for 3-lepton flavor in BSM models' has been awarded the Popularity badge."
-          displayActionButton={true}
-          imageURL="https://i.ibb.co/b3tVxG6/popular.png"
-          actionPath="/drafts/79fdc896151a497f9bce5db03e84fd62"
-          actionLabel="Show"
-        />
+
+        {showed_first_notification ? (
+          <Notification
+            messageTitle="Qualify for new badge"
+            message="A new badge will soon be introduced to acknowledge analyses that are thoroughly documented. Two of your analyses are close to qualify."
+            displayActionButton={true}
+            imageURL="https://i.ibb.co/FHdyDHk/thorough-notification.png"
+            actionPath="/newbadge"
+            actionLabel="More"
+            showSuccess={false}
+          />
+        ) : (
+          <Notification
+            messageTitle="Congratulations!"
+            message="Your analysis 'Search for 3-lepton flavor in BSM models' has been awarded the Popularity badge."
+            displayActionButton={true}
+            imageURL="https://i.ibb.co/b3tVxG6/popular.png"
+            actionPath="/drafts/79fdc896151a497f9bce5db03e84fd62"
+            actionLabel="Show"
+            showSuccess={true}
+          />
+        )}
       </Box>
     );
   }
