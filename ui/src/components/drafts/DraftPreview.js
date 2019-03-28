@@ -77,6 +77,33 @@ class DraftPreview extends React.Component {
         ? transformSchema(this.props.schemas.schema)
         : null;
 
+    var abstract = "";
+    var keywords = "";
+    var hasAuthors = false;
+    var authors = null;
+
+    if (
+      this.props.draft.basic_info != null &&
+      this.props.draft.basic_info.keywords != null
+    ) {
+      keywords = this.props.draft.basic_info.keywords;
+    }
+
+    if (
+      this.props.draft.basic_info != null &&
+      this.props.draft.basic_info.abstract != null
+    ) {
+      abstract = this.props.draft.basic_info.abstract;
+    }
+
+    if (
+      this.props.draft.basic_info != null &&
+      this.props.draft.basic_info.analysis_proponents != null
+    ) {
+      hasAuthors = true;
+      authors = this.props.draft.basic_info.analysis_proponents;
+    }
+
     return (
       <Box id="deposit-page" flex={true}>
         {this.props.error ? (
@@ -92,7 +119,26 @@ class DraftPreview extends React.Component {
           {this.props.schemas && this.props.schemas.schema ? (
             <Box flex={true}>
               <Box colorIndex="light-2">
-                <BadgeHeaderPreview />
+                <BadgeHeaderPreview
+                  popular={this.props.draft._achievements.popularity > 0}
+                  innovative={this.props.draft._achievements.innovative > 0}
+                  educational={this.props.draft._achievements.educational > 0}
+                  reusable={this.props.draft._achievements.reusable > 0}
+                  fundamental={this.props.draft._achievements.fundamental > 0}
+                  title={this.props.draft.general_title}
+                  hasAbstract={
+                    this.props.draft.basic_info &&
+                    this.props.draft.basic_info.abstract
+                  }
+                  abstract={abstract}
+                  keywords={keywords}
+                  hasKeywords={
+                    this.props.draft.basic_info &&
+                    this.props.draft.basic_info.keyword
+                  }
+                  hasAuthors={hasAuthors}
+                  authors={authors}
+                />
               </Box>
 
               <Box flex={true}>

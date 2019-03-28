@@ -14,26 +14,40 @@ export default function BadgeHeader(props) {
       style={{ "align-self": "center" }}
       pad={{ horizontal: "small", vertical: "small" }}
     >
-      <BadgeHeaderItem
-        imageURL="https://i.ibb.co/F8xDnSX/popular-with-title.png"
-        tooltipText="This badge indicates that ..."
-      />
-      <BadgeHeaderItem
-        imageURL="https://i.ibb.co/0m5nT4C/innovative-with-title.png"
-        tooltipText="This badge indicates that ..."
-      />
-      <BadgeHeaderItem
-        imageURL="https://i.ibb.co/Q9nxyV9/fundamental-with-title.png"
-        tooltipText="This badge indicates that ..."
-      />
-      <BadgeHeaderItem
-        imageURL="https://i.ibb.co/dP34SZM/educational-with-title.png"
-        tooltipText="This badge indicates that ..."
-      />
-      {/*<BadgeHeaderItem
-        imageURL="https://i.ibb.co/xY1cdm6/reusable-with-title.png"
-        tooltipText="This badge indicates that ..."
-      />*/}
+      {props.displayPopular && (
+        <BadgeHeaderItem
+          imageURL="https://i.ibb.co/F8xDnSX/popular-with-title.png"
+          tooltipText="This badge indicates that ..."
+        />
+      )}
+
+      {props.displayInnovative && (
+        <BadgeHeaderItem
+          imageURL="https://i.ibb.co/0m5nT4C/innovative-with-title.png"
+          tooltipText="This badge indicates that ..."
+        />
+      )}
+
+      {props.displayFundamental && (
+        <BadgeHeaderItem
+          imageURL="https://i.ibb.co/Q9nxyV9/fundamental-with-title.png"
+          tooltipText="This badge indicates that ..."
+        />
+      )}
+
+      {props.displayEducational && (
+        <BadgeHeaderItem
+          imageURL="https://i.ibb.co/dP34SZM/educational-with-title.png"
+          tooltipText="This badge indicates that ..."
+        />
+      )}
+
+      {props.displayReusable && (
+        <BadgeHeaderItem
+          imageURL="https://i.ibb.co/xY1cdm6/reusable-with-title.png"
+          tooltipText="This badge indicates that ..."
+        />
+      )}
     </Box>
   );
 }
@@ -42,5 +56,10 @@ BadgeHeader.propTypes = {
   label: PropTypes.string,
   icon: PropTypes.element,
   status: PropTypes.element,
-  action: PropTypes.element
+  action: PropTypes.element,
+  displayPopular: PropTypes.bool,
+  displayEducational: PropTypes.bool,
+  displayInnovative: PropTypes.bool,
+  displayReusable: PropTypes.bool,
+  displayFundamental: PropTypes.bool
 };

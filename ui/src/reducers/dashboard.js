@@ -11,7 +11,11 @@ const initialState = Map({
     user_drafts_count: 0,
     user_published_count: 0,
     user_count: 0,
-    user_drafts_achievements: []
+    user_drafts_achievements: [],
+    user_drafts_educational: [],
+    user_drafts_innovative: [],
+    user_drafts_reusable: [],
+    user_drafts_fundamental: []
   }
 });
 

@@ -1,0 +1,27 @@
+{
+  "allow_all": true,
+  "experiment": null,
+  "fullname": null,
+  "is_deposit": false,
+  "jsonschema": {
+    "type": "object",
+    "name": "_achievements",
+    "properties": {
+      "popularity": {
+        "type": "integer"
+      },
+      "educational": {
+        "type": "integer"
+      },
+      "reusable": {
+        "type": "integer"
+      },
+      "innovative": {
+        "type": "integer"
+      },
+      "fundamental": {
+        "type": "integer"
+      }
+    }
+  }
+}

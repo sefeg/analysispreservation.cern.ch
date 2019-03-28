@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import { connect } from "react-redux";
+
 import Box from "grommet/components/Box";
 import Label from "grommet/components/Label";
 import Header from "grommet/components/Header";
@@ -25,6 +27,12 @@ class BadgeVoteItem extends React.Component {
     } else {
       this.colorIndexString = "#92D050";
       this.setState({ selected: true });
+
+      //if(this.props.badgeTitle == "Educational"){
+      //_achievements.voters_id_educational add currentUserId
+      //}else if (this.props.badgeTitle == "Innovative") {
+
+      //}
     }
   }
 
@@ -63,11 +71,17 @@ class BadgeVoteItem extends React.Component {
   }
 }
 
-export default BadgeVoteItem;
-
 BadgeVoteItem.propTypes = {
   imageURL: PropTypes.string,
   tooltipText: PropTypes.string,
   badgeTitle: PropTypes.string,
   selected: PropTypes.bool
 };
+
+function mapStateToProps(state) {
+  return {
+    currentUserId: state.auth.getIn(["currentUser", "userId"])
+  };
+}
+
+export default connect(mapStateToProps)(BadgeVoteItem);

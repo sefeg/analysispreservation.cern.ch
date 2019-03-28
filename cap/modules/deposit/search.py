@@ -88,6 +88,51 @@ class CAPDepositSearch(RecordsSearch):
             Q('multi_match', query=current_user.id, fields=['_deposit.owners'])
         )
 
+    def get_popular_deposits(self):
+        """Get draft deposits that current user owns and that have received at least
+        one popularity badge."""
+        return self.filter(
+            Q('match', **{'_deposit.status': 'draft'}) &
+            Q('multi_match', query=current_user.id, fields=['_deposit.owners']) &
+            Q({"range" : {"_achievements.popularity" : {"gt" : 0}}})
+        )
+
+    def get_educational_deposits(self):
+        """Get draft deposits that current user owns and that have received at least
+        one educational badge."""
+        return self.filter(
+            Q('match', **{'_deposit.status': 'draft'}) &
+            Q('multi_match', query=current_user.id, fields=['_deposit.owners']) &
+            Q({"range" : {"_achievements.educational" : {"gt" : 0}}})
+        )
+
+    def get_innovative_deposits(self):
+        """Get draft deposits that current user owns and that have received at least
+        one innovative badge."""
+        return self.filter(
+            Q('match', **{'_deposit.status': 'draft'}) &
+            Q('multi_match', query=current_user.id, fields=['_deposit.owners']) &
+            Q({"range" : {"_achievements.innovative" : {"gt" : 0}}})
+        )
+
+    def get_fundamental_deposits(self):
+        """Get draft deposits that current user owns and that have received at least
+        one fundamental badge."""
+        return self.filter(
+            Q('match', **{'_deposit.status': 'draft'}) &
+            Q('multi_match', query=current_user.id, fields=['_deposit.owners']) &
+            Q({"range" : {"_achievements.fundamental" : {"gt" : 0}}})
+        )
+
+    def get_reusable_deposits(self):
+        """Get draft deposits that current user owns and that have received at least
+        one reusable badge."""
+        return self.filter(
+            Q('match', **{'_deposit.status': 'draft'}) &
+            Q('multi_match', query=current_user.id, fields=['_deposit.owners']) &
+            Q({"range" : {"_achievements.reusable" : {"gt" : 0}}})
+        )
+
     def get_shared_with_user(self):
         """Get draft deposits shared with current user ."""
         return self.filter(

@@ -96,7 +96,12 @@ def dashboard():
     user_drafts = ds.get_user_deposits().execute().hits.hits
     user_drafts_count = ds.get_user_deposits().count()
     shared_with_user = ds.get_shared_with_user().execute().hits.hits
-    user_drafts_achievements = ds.get_user_deposits().execute().hits.hits
+
+    user_drafts_achievements = ds.get_popular_deposits().execute().hits.hits
+    user_drafts_educational = ds.get_educational_deposits().execute().hits.hits
+    user_drafts_innovative = ds.get_innovative_deposits().execute().hits.hits
+    user_drafts_reusable = ds.get_reusable_deposits().execute().hits.hits
+    user_drafts_fundamental = ds.get_fundamental_deposits().execute().hits.hits
 
     return jsonify({
         'published_by_collab': serialize_records(published_by_collab[:4]),
@@ -106,5 +111,10 @@ def dashboard():
         'user_drafts_count': user_drafts_count,
         'user_published_count': user_published_count,
         'user_count': user_drafts_count + user_published_count,
-        'user_drafts_achievements': serialize_deposits(user_drafts_achievements[:4])
+        'user_drafts_achievements': serialize_deposits(user_drafts_achievements[:4]),
+        'user_drafts_educational': serialize_deposits(user_drafts_educational[:4]),
+        'user_drafts_innovative': serialize_deposits(user_drafts_innovative[:4]),
+        'user_drafts_reusable': serialize_deposits(user_drafts_reusable[:4]),
+        'user_drafts_fundamental': serialize_deposits(user_drafts_fundamental[:4])
+
     })

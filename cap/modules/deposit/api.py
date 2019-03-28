@@ -530,6 +530,14 @@ class CAPDeposit(Deposit):
         #deposit._set_achievements()
         deposit._init_owner_permissions(owner)
 
+        deposit['_achievements'] = {
+            'popularity': 0,
+            'educational': 0,
+            'reusable': 1,
+            'fundamental': 2,
+            'innovative': 1
+        }
+
         deposit.commit()
 
         return deposit

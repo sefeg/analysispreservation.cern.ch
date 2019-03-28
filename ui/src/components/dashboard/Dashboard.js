@@ -50,6 +50,19 @@ function AchievementTile(props) {
             let metadata = item.metadata;
             let id = item.id;
             var text = "";
+            var achievement_count = metadata._achievements.popularity;
+
+            {
+              props.header == "Educational"
+                ? (achievement_count = metadata._achievements.educational)
+                : props.header == "Reusable"
+                  ? (achievement_count = metadata._achievements.reusable)
+                  : props.header == "Innovative"
+                    ? (achievement_count = metadata._achievements.innovative)
+                    : props.header == "Fundamental"
+                      ? (achievement_count = metadata._achievements.fundamental)
+                      : "Neithe";
+            }
 
             return (
               <ListItem
@@ -65,30 +78,13 @@ function AchievementTile(props) {
                     color: "black"
                   }}
                 >
-                  {/*{Object.keys(metadata).forEach(function(key) {
-                    var current = metadata[key];
-
-                    if (typeof current == "object") {
-                      text = text + key + ": ";
-
-                      Object.keys(current).forEach(function(key2) {
-                        var current2 = current[key2];
-
-                        text = text + key2 + "; ";
-                      });
-                    } else {
-                      text = text + "." + key + ". ";
-                    }
-                  })}
-                  {text}*/}
-
                   {metadata.general_title || id}
                 </Anchor>
 
                 {props.singleAchievement == "true" ? (
                   <Image style={{ width: 25 }} src={props.image_src} />
                 ) : (
-                  Array.from(Array(metadata._achievements)).map(() => (
+                  Array.from(Array(achievement_count)).map(() => (
                     <Image style={{ width: 25 }} src={props.image_src} />
                   ))
                 )}
@@ -206,7 +202,7 @@ class Dashboard extends React.Component {
           />
           <AchievementTile
             image_src="https://i.ibb.co/HYxfm1R/Training.png"
-            items={this.props.results.user_drafts}
+            items={this.props.results.user_drafts_educational}
             singleAchievement="false"
             header="Educational"
             urlDetailed="/drafts"
@@ -217,7 +213,7 @@ class Dashboard extends React.Component {
           />
           <AchievementTile
             image_src="https://i.ibb.co/rwdhwRx/Fundamental.png"
-            items={this.props.results.user_drafts}
+            items={this.props.results.user_drafts_fundamental}
             singleAchievement="false"
             header="Fundamental"
             urlDetailed="/drafts"
@@ -229,7 +225,7 @@ class Dashboard extends React.Component {
 
           <AchievementTile
             image_src="https://i.ibb.co/pzt1dm9/innovative.png"
-            items={this.props.results.user_drafts}
+            items={this.props.results.user_drafts_innovative}
             singleAchievement="false"
             header="Innovative"
             urlDetailed="/drafts"
@@ -241,7 +237,7 @@ class Dashboard extends React.Component {
 
           <AchievementTile
             image_src="https://i.ibb.co/ZffHgyF/Reusable.png"
-            items={this.props.results.user_drafts}
+            items={this.props.results.user_drafts_reusable}
             singleAchievement="false"
             header="Reusable"
             urlDetailed="/drafts"

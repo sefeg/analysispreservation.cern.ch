@@ -306,6 +306,10 @@
         "$ref":
           "https://analysispreservation.cern.ch/schemas/deposits/common/deposit-v0.0.1.json"
       },
+      "_achievements": {
+        "$ref":
+          "https://analysispreservation.cern.ch/schemas/deposits/common/achievements-v0.0.1.json"
+      },
       "additional_resources": {
         "title": "Additional Resources",
         "type": "object",

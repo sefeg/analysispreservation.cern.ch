@@ -46,25 +46,25 @@ class BadgeHeaderPreview extends React.Component {
         >
           <BadgeHeaderPreviewItem
             action={this.handler}
-            disableButton={false}
+            disableButton={!this.props.popular}
             imageURL="https://i.ibb.co/b3tVxG6/popular.png"
             tooltipText="This work is POPULAR in your collaboration. Popularity is based on the number of researchers viewing an analysis."
           />
           <BadgeHeaderPreviewItem
             action={this.handler}
-            disableButton={false}
+            disableButton={!this.props.innovative}
             imageURL="https://i.ibb.co/pzt1dm9/innovative.png"
             tooltipText="Your colleagues consider this work to be INNOVATIVE. The award is based on the number of researchers using the corresponding feedback mechanism in the bottom-left corner of this screen."
           />
           <BadgeHeaderPreviewItem
             action={this.handler}
-            disableButton={false}
+            disableButton={!this.props.fundamental}
             imageURL="https://i.ibb.co/rwdhwRx/Fundamental.png"
             tooltipText="This work is FUNDAMENTAL: Analyses published on CERN Analysis Preservation can be cloned. That way, existing work provides a foundation for future research. Often cloned work receives this award."
           />
           <BadgeHeaderPreviewItem
             action={this.handler}
-            disableButton={false}
+            disableButton={!this.props.educational}
             imageURL="https://i.ibb.co/HYxfm1R/Training.png"
             tooltipText="Your colleagues consider this work to be EDUCATIONAL. The award is based on the number of researchers using the corresponding feedback mechanism in the bottom-left corner of this screen."
           />
@@ -72,7 +72,7 @@ class BadgeHeaderPreview extends React.Component {
 
           <BadgeHeaderPreviewItem
             action={this.handler}
-            disableButton={true}
+            disableButton={!this.props.reusable}
             imageURL="https://i.ibb.co/frzfG4g/reusable-disabled.png"
             tooltipText="--Only you can see this disabled badge-- Once this analysis can be re-executed on ReAna, you will get the REUSABLE badge."
           />
@@ -114,27 +114,37 @@ class BadgeHeaderPreview extends React.Component {
                 direction="column"
                 style={{ padding: "10px", "min-width": "50%" }}
               >
-                <h3 style={{ "margin-bottom": "10px" }}>
-                  Title of this work. Probably a bit longer.
-                </h3>
+                <h3 style={{ "margin-bottom": "10px" }}>{this.props.title}</h3>
 
-                <h4 style={{ "margin-bottom": "3px" }}>Suitable ID</h4>
-                <h4 style={{ "margin-bottom": "20px" }}>
-                  Keywords: key1; key2; key3.
-                </h4>
+                <h4 style={{ "margin-bottom": "3px" }}>10.270/cap.cms.3414</h4>
 
-                <h5 style={{ "margin-bottom": "3px" }}>
-                  Author Name1, Affiliation
-                </h5>
-                <h5 style={{ "margin-bottom": "3px" }}>
-                  Author Name2, Affiliation
-                </h5>
-                <h5 style={{ "margin-bottom": "3px" }}>
-                  Author Name3, Affiliation
-                </h5>
+                {this.props.hasAbstract && (
+                  <h4 style={{ "margin-bottom": "20px" }}>
+                    {this.props.abstract}
+                  </h4>
+                )}
+
+                {this.props.hasKeywords && (
+                  <h4 style={{ "margin-bottom": "20px" }}>
+                    Keywords: {this.props.keywords}
+                  </h4>
+                )}
+
+                {this.props.hasAuthors &&
+                  this.props.authors.map((author, index) => {
+                    <h5 style={{ "margin-bottom": "3px" }}>
+                      {author.name} ({author.orcid})
+                    </h5>;
+                  })}
               </Box>
               <Box style={{ display: "grid" }}>
-                <BadgeHeader />
+                <BadgeHeader
+                  displayPopular={this.props.popular}
+                  displayReusable={this.props.reusable}
+                  displayInnovative={this.props.innovative}
+                  displayFundamental={this.props.fundamental}
+                  displayEducational={this.props.educational}
+                />
               </Box>
             </Box>
           </Box>
@@ -150,5 +160,18 @@ BadgeHeaderPreview.propTypes = {
   label: PropTypes.string,
   icon: PropTypes.element,
   status: PropTypes.element,
-  action: PropTypes.element
+  action: PropTypes.element,
+  popular: PropTypes.bool,
+  educational: PropTypes.bool,
+  innovative: PropTypes.bool,
+  reusable: PropTypes.bool,
+  popular: PropTypes.bool,
+  fundamental: PropTypes.bool,
+  title: PropTypes.string,
+  hasAbstract: PropTypes.bool,
+  hasKeywords: PropTypes.bool,
+  keywords: PropTypes.string,
+  abstract: PropTypes.string,
+  hasAuthors: PropTypes.bool,
+  authors: PropTypes.object
 };

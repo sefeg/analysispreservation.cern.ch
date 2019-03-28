@@ -243,6 +243,11 @@ RECORDS_REST_FACETS = {
                     'field': 'status.keyword'
                 }
             },
+            "facet_popularity": {
+                'terms': {
+                    'field': '_achievements.popularity'
+                }
+            },
             'facet_type': {
                 'terms': {
                     'field': '_type'
@@ -299,6 +304,7 @@ RECORDS_REST_FACETS = {
         },
         'post_filters': {
             'type': terms_filter('_type'),
+            'popularity': terms_filter('_achievements.popularity'),
             'status': terms_filter('status.keyword'),
             'cadi_status': terms_filter('cadi_status'),
             'achievements': terms_filter('achievements'),
