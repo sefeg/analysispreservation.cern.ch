@@ -191,7 +191,7 @@ class Dashboard extends React.Component {
         <Tiles full={true}>
           <AchievementTile
             image_src="https://i.ibb.co/b3tVxG6/popular.png"
-            items={this.props.results.user_drafts_achievements}
+            items={this.props.results.user_drafts_popular}
             singleAchievement="false"
             header="Popular"
             urlDetailed="/drafts"
@@ -214,7 +214,7 @@ class Dashboard extends React.Component {
           <AchievementTile
             image_src="https://i.ibb.co/rwdhwRx/Fundamental.png"
             items={this.props.results.user_drafts_fundamental}
-            singleAchievement="false"
+            singleAchievement="true"
             header="Fundamental"
             urlDetailed="/drafts"
             urlMore={`/drafts?q=created_by:${
@@ -336,7 +336,7 @@ class Dashboard extends React.Component {
             message="Your analysis 'Search for 3-lepton flavor in BSM models' has been awarded the Popularity badge."
             displayActionButton={true}
             imageURL="https://i.ibb.co/b3tVxG6/popular.png"
-            actionPath="/drafts/79fdc896151a497f9bce5db03e84fd62"
+            actionPath="/drafts/ee5a1c43f63e476f8be76a9795af8235"
             actionLabel="Show"
             showSuccess={true}
           />

@@ -84,6 +84,10 @@
       "_experiment": {
         "type": "string"
       },
+      "_achievements": {
+        "$ref":
+          "https://analysispreservation.cern.ch/schemas/deposits/common/achievements-v0.0.1.json"
+      },
       "_access": {
         "$ref":
           "https://analysispreservation.cern.ch/schemas/deposits/common/access-v0.0.1.json"

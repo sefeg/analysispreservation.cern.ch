@@ -42,7 +42,6 @@ def test_cleaning_of_empty_values():
             "status": "draft"
         },
         "_experiment": "CMS",
-        "_achievements": "3",
         "_files": [
 
         ],

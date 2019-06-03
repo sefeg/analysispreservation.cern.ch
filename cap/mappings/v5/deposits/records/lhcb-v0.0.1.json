@@ -23,6 +23,32 @@
         "_experiment": {
           "type": "text"
         },
+        "_achievements": {
+          "type": "object",
+          "properties": {
+            "popularity": {
+              "type": "integer"
+            },
+            "educational": {
+              "type": "integer"
+            },
+            "innovative": {
+              "type": "integer"
+            },
+            "reusable": {
+              "type": "integer"
+            },
+            "fundamental": {
+              "type": "integer"
+            },
+            "voters_id_educational": {
+              "type": "integer"
+            },
+            "voters_id_innovative": {
+              "type": "integer"
+            }
+          }
+        },
         "_created": {
           "type": "date",
           "copy_to": "created"

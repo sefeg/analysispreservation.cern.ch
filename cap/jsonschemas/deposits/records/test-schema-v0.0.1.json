@@ -1,7 +1,6 @@
 {
   "allow_all": true,
   "experiment": null,
-  "_achievements": "3",
   "fullname": "Test schema.",
   "is_deposit": true,
   "jsonschema": {

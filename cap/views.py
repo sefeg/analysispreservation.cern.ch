@@ -90,6 +90,9 @@ def dashboard():
     rs = CAPRecordSearch().sort_by_latest()
     ds = CAPDepositSearch().sort_by_latest()
 
+    ds_achievements = CAPDepositSearch().sort_by_popularity()
+
+
     published_by_collab = rs.execute().hits.hits
     user_published = rs.get_user_records().execute().hits.hits
     user_published_count = rs.get_user_records().count()
@@ -97,7 +100,7 @@ def dashboard():
     user_drafts_count = ds.get_user_deposits().count()
     shared_with_user = ds.get_shared_with_user().execute().hits.hits
 
-    user_drafts_achievements = ds.get_popular_deposits().execute().hits.hits
+    user_drafts_popular = ds_achievements.get_popular_deposits().execute().hits.hits
     user_drafts_educational = ds.get_educational_deposits().execute().hits.hits
     user_drafts_innovative = ds.get_innovative_deposits().execute().hits.hits
     user_drafts_reusable = ds.get_reusable_deposits().execute().hits.hits
@@ -111,7 +114,7 @@ def dashboard():
         'user_drafts_count': user_drafts_count,
         'user_published_count': user_published_count,
         'user_count': user_drafts_count + user_published_count,
-        'user_drafts_achievements': serialize_deposits(user_drafts_achievements[:4]),
+        'user_drafts_popular': serialize_deposits(user_drafts_popular[:4]),
         'user_drafts_educational': serialize_deposits(user_drafts_educational[:4]),
         'user_drafts_innovative': serialize_deposits(user_drafts_innovative[:4]),
         'user_drafts_reusable': serialize_deposits(user_drafts_reusable[:4]),

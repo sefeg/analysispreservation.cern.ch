@@ -97,6 +97,10 @@
         "$ref":
           "https://analysispreservation.cern.ch/schemas/deposits/common/file-v0.0.1.json"
       },
+      "_achievements": {
+        "$ref":
+          "https://analysispreservation.cern.ch/schemas/deposits/common/achievements-v0.0.1.json"
+      },
       "basic_info": {
         "properties": {
           "analysis_proponents": {
@@ -198,9 +202,6 @@
         "type": "string"
       },
       "_experiment": {
-        "type": "string"
-      },
-      "_achievements": {
         "type": "string"
       },
       "_access": {

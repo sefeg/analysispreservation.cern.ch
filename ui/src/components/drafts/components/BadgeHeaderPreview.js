@@ -36,6 +36,30 @@ class BadgeHeaderPreview extends React.Component {
   }
 
   render() {
+    var disabledBadgePreText = "--Only you can see this disabled badge-- ";
+
+    var popularTooltipText =
+      "This work is POPULAR in your collaboration. Popularity is based on the number of researchers viewing an analysis.";
+    var innovativeTooltipText =
+      "Your colleagues consider this work to be INNOVATIVE. The award is based on the number of researchers using the corresponding feedback mechanism in the bottom-left corner of this screen.";
+    var fundamentalTooltipText =
+      "This work is FUNDAMENTAL: Analyses published on CERN Analysis Preservation can be cloned. That way, existing work provides a foundation for future research. Often cloned work receives this award.";
+    var educationalTooltipText =
+      "Your colleagues consider this work to be EDUCATIONAL. The award is based on the number of researchers using the corresponding feedback mechanism in the bottom-left corner of this screen.";
+    var reusableTooltipText =
+      "REUSABLE: Indicates that this analysis can be re-executed on ReAna.";
+
+    var disabledPopularTooltipText =
+      "Promotes work that is POPULAR in your collaboration. Popularity is based on the number of researchers viewing an analysis.";
+    var disabledInnovativeTooltipText =
+      "INNOVATIVE: The award is based on the number of researchers using the corresponding feedback mechanism in the bottom-left corner of this screen.";
+    var disabledFundamentalTooltipText =
+      "FUNDAMENTAL: Analyses published on CERN Analysis Preservation can be cloned. That way, existing work provides a foundation for future research. Often cloned work receives this award.";
+    var disabledEducationalTooltipText =
+      "Awarded to EDUCATIONAL work. The award is based on the number of researchers using the corresponding feedback mechanism in the bottom-left corner of this screen.";
+    var disabledReusableTooltipText =
+      "Once this analysis can be re-executed on ReAna, you will get the REUSABLE badge.";
+
     return (
       <Box direction="column">
         <Box
@@ -48,33 +72,53 @@ class BadgeHeaderPreview extends React.Component {
             action={this.handler}
             disableButton={!this.props.popular}
             imageURL="https://i.ibb.co/b3tVxG6/popular.png"
-            tooltipText="This work is POPULAR in your collaboration. Popularity is based on the number of researchers viewing an analysis."
+            tooltipText={
+              this.props.popular
+                ? popularTooltipText
+                : disabledBadgePreText + disabledPopularTooltipText
+            }
           />
           <BadgeHeaderPreviewItem
             action={this.handler}
             disableButton={!this.props.innovative}
             imageURL="https://i.ibb.co/pzt1dm9/innovative.png"
-            tooltipText="Your colleagues consider this work to be INNOVATIVE. The award is based on the number of researchers using the corresponding feedback mechanism in the bottom-left corner of this screen."
+            tooltipText={
+              this.props.innovative
+                ? innovativeTooltipText
+                : disabledBadgePreText + disabledInnovativeTooltipText
+            }
           />
           <BadgeHeaderPreviewItem
             action={this.handler}
             disableButton={!this.props.fundamental}
             imageURL="https://i.ibb.co/rwdhwRx/Fundamental.png"
-            tooltipText="This work is FUNDAMENTAL: Analyses published on CERN Analysis Preservation can be cloned. That way, existing work provides a foundation for future research. Often cloned work receives this award."
+            tooltipText={
+              this.props.fundamental
+                ? fundamentalTooltipText
+                : disabledBadgePreText + disabledFundamentalTooltipText
+            }
           />
           <BadgeHeaderPreviewItem
             action={this.handler}
             disableButton={!this.props.educational}
             imageURL="https://i.ibb.co/HYxfm1R/Training.png"
-            tooltipText="Your colleagues consider this work to be EDUCATIONAL. The award is based on the number of researchers using the corresponding feedback mechanism in the bottom-left corner of this screen."
+            tooltipText={
+              this.props.educational
+                ? educationalTooltipText
+                : disabledBadgePreText + disabledEducationalTooltipText
+            }
           />
-          {/*https://i.ibb.co/ZffHgyF/Reusable.png*/}
+          {/*https://i.ibb.co/frzfG4g/reusable-disabled.png*/}
 
           <BadgeHeaderPreviewItem
             action={this.handler}
             disableButton={!this.props.reusable}
-            imageURL="https://i.ibb.co/frzfG4g/reusable-disabled.png"
-            tooltipText="--Only you can see this disabled badge-- Once this analysis can be re-executed on ReAna, you will get the REUSABLE badge."
+            imageURL="https://i.ibb.co/ZffHgyF/Reusable.png"
+            tooltipText={
+              this.props.reusable
+                ? reusableTooltipText
+                : disabledBadgePreText + disabledReusableTooltipText
+            }
           />
         </Box>
 

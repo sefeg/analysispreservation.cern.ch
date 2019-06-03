@@ -23,9 +23,6 @@
         "_experiment": {
           "type": "text"
         },
-        "_achievements": {
-          "type": "text"
-        },
         "created": {
           "type": "date"
         },

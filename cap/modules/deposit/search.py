@@ -146,3 +146,8 @@ class CAPDepositSearch(RecordsSearch):
         return self.sort(
             {'_updated': {'unmapped_type': 'date', 'order': 'desc'}}
         )
+
+    def sort_by_popularity(self):
+        return self.sort(
+            {'_achievements.popularity': {'unmapped_type': 'integer', 'order': 'desc'}}
+        )

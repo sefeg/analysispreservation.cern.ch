@@ -21,6 +21,16 @@
       },
       "fundamental": {
         "type": "integer"
+      },
+      "voters_id_educational": {
+        "items": {
+          "type": "integer"
+        }
+      },
+      "voters_id_innovative": {
+        "items": {
+          "type": "integer"
+        }
       }
     }
   }

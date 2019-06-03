@@ -40,6 +40,12 @@
             },
             "fundamental": {
               "type": "integer"
+            },
+            "voters_id_educational": {
+              "type": "integer"
+            },
+            "voters_id_innovative": {
+              "type": "integer"
             }
           }
         },
