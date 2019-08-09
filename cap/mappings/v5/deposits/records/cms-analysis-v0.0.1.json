@@ -32,10 +32,10 @@
             "educational": {
               "type": "integer"
             },
-            "innovative": {
+            "reusable": {
               "type": "integer"
             },
-            "reusable": {
+            "innovative": {
               "type": "integer"
             },
             "fundamental": {

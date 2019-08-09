@@ -94,23 +94,17 @@ class Header extends React.Component {
                 >
                   <Menu
                     colorIndex="neutral-1"
-                    responsive={true}
                     label="Create"
+                    style={{ color: "white" }}
                     dropAlign={{ top: "bottom" }}
                     size="small"
                   >
-                    {this.props.groups ? (
-                      this.props.groups.map((group, index) => (
-                        <Anchor
-                          key={`${group.get("name")}-${index}`}
-                          label={`${group.get("name")}`}
-                          animateIcon={true}
-                          path={`/drafts/create/${group.get("deposit_group")}`}
-                        />
-                      ))
-                    ) : (
-                      <Box> No available schemas.</Box>
-                    )}
+                    <Anchor
+                      key={`LHC Analysis`}
+                      label={`LHC Analysis`}
+                      animateIcon={true}
+                      path={`/drafts/create/cms-analysis`}
+                    />
                   </Menu>
                   <Menu
                     colorIndex="neutral-1"

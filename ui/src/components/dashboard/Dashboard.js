@@ -166,16 +166,27 @@ function DashboardList(props) {
   );
 }
 
-var showed_first_notification = false;
+var notification_counter = 0;
+var show_first_notification_popularity = false;
+var show_second_notification_completeness = false;
 
 class Dashboard extends React.Component {
   componentDidMount() {
     this.props.fetchDashboard();
+
+    notification_counter = notification_counter + 1;
+
+    show_first_notification_popularity = false;
+    show_second_notification_completeness = false;
+
+    if (notification_counter == 2) {
+      show_first_notification_popularity = true;
+    } else if (notification_counter == 3) {
+      show_second_notification_completeness = true;
+    }
   }
 
-  componentWillUnmount() {
-    showed_first_notification = true;
-  }
+  componentWillUnmount() {}
 
   render() {
     return (
@@ -197,7 +208,7 @@ class Dashboard extends React.Component {
             urlDetailed="/drafts"
             urlMore={`/drafts?q=created_by:${
               this.props.currentUserId
-            }&status=published`}
+            }&achievements=Popular`}
             emptyMessage="Popular analyses in your collaboration. Popularity is based on the number of researchers viewing an analysis."
           />
           <AchievementTile
@@ -208,7 +219,7 @@ class Dashboard extends React.Component {
             urlDetailed="/drafts"
             urlMore={`/drafts?q=created_by:${
               this.props.currentUserId
-            }&status=draft`}
+            }&achievements=Educational`}
             emptyMessage="Lists work that is particularly EDUCATIONAL. The award is directly based on the feedback by the members of your collaboration."
           />
           <AchievementTile
@@ -219,7 +230,7 @@ class Dashboard extends React.Component {
             urlDetailed="/drafts"
             urlMore={`/drafts?q=created_by:${
               this.props.currentUserId
-            }&status=draft`}
+            }&achievements=Fundamental`}
             emptyMessage="Lists work that is FUNDAMENTAL: Analyses published on CERN Analysis Preservation can be cloned. That way, existing work provides a foundation for future research. Often cloned work receives this award."
           />
 
@@ -231,7 +242,7 @@ class Dashboard extends React.Component {
             urlDetailed="/drafts"
             urlMore={`/drafts?q=created_by:${
               this.props.currentUserId
-            }&status=draft`}
+            }&achievements=Innovative`}
             emptyMessage="Lists work that is INNOVATIVE. The award is directly based on the feedback by the members of your collaboration."
           />
 
@@ -243,7 +254,7 @@ class Dashboard extends React.Component {
             urlDetailed="/drafts"
             urlMore={`/drafts?q=created_by:${
               this.props.currentUserId
-            }&status=draft`}
+            }&achievements=Reusable`}
             emptyMessage="Lists work that is REUSABLE: Every analysis that's re-execution on ReAna can directly be initiated on CERN Analysis Preservation receives this award."
           />
 
@@ -320,7 +331,19 @@ class Dashboard extends React.Component {
           </Tile>
         </Tiles>
 
-        {showed_first_notification ? (
+        {show_first_notification_popularity ? (
+          <Notification
+            messageTitle="Congratulations!"
+            message="Your analysis 'Search for 3-lepton flavor in BSM models' has been awarded the Popularity badge."
+            displayActionButton={true}
+            imageURL="https://i.ibb.co/b3tVxG6/popular.png"
+            actionPath="/drafts/c4e4ebb6d0554d608bfc850b19473e65"
+            actionLabel="Show"
+            showSuccess={true}
+          />
+        ) : null}
+
+        {show_second_notification_completeness ? (
           <Notification
             messageTitle="Qualify for new badge"
             message="A new badge will soon be introduced to acknowledge analyses that are thoroughly documented. Two of your analyses are close to qualify."
@@ -330,17 +353,7 @@ class Dashboard extends React.Component {
             actionLabel="More"
             showSuccess={false}
           />
-        ) : (
-          <Notification
-            messageTitle="Congratulations!"
-            message="Your analysis 'Search for 3-lepton flavor in BSM models' has been awarded the Popularity badge."
-            displayActionButton={true}
-            imageURL="https://i.ibb.co/b3tVxG6/popular.png"
-            actionPath="/drafts/ee5a1c43f63e476f8be76a9795af8235"
-            actionLabel="Show"
-            showSuccess={true}
-          />
-        )}
+        ) : null}
       </Box>
     );
   }

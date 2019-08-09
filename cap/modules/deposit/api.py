@@ -521,11 +521,12 @@ class CAPDeposit(Deposit):
         deposit._init_owner_permissions(owner)
 
         deposit['_achievements'] = {
-            'popularity': 3,
-            'educational': 0,
+            'popularity': 1,
+            'educational': 1,
             'reusable': 0,
-            'fundamental': 3,
-            'innovative': 1,
+            'fundamental': 0,
+            'achievements':['Educational', 'Popular'],
+            'innovative': 0,
             'voters_id_educational': 0,
             'voters_id_innovative': 0
         }

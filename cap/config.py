@@ -243,9 +243,9 @@ RECORDS_REST_FACETS = {
                     'field': 'status.keyword'
                 }
             },
-            "facet_popularity": {
-                'terms': {
-                    'field': '_achievements.popularity'
+            'facet_achievements':{
+                'terms':{
+                    'field': '_achievements.achievements.keyword'
                 }
             },
             'facet_type': {
@@ -256,11 +256,6 @@ RECORDS_REST_FACETS = {
             'facet_cadi_status': {
                 'terms': {
                     'field': 'cadi_status'
-                }
-            },
-	        'facet_achievements': {
-                'terms': {
-                    'field': 'achievements'
                 }
             },
             'facet_publication_status': {
@@ -304,10 +299,9 @@ RECORDS_REST_FACETS = {
         },
         'post_filters': {
             'type': terms_filter('_type'),
-            'popularity': terms_filter('_achievements.popularity'),
             'status': terms_filter('status.keyword'),
+            'achievements': terms_filter('_achievements.achievements.keyword'),
             'cadi_status': terms_filter('cadi_status'),
-            'achievements': terms_filter('achievements'),
             'publication_status': terms_filter('publication_status.keyword'),
             'conference': terms_filter('conference'),
             'physics_objects': nested_filter(
@@ -333,9 +327,9 @@ RECORDS_REST_FACETS = {
                     'field': 'cadi_status'
                 }
             },
-            'facet_achievements': {
-                'terms': {
-                    'field': 'achievements'
+            'facet_achievements':{
+                'terms':{
+                    'field': '_achievements.achievements.keyword'
                 }
             },
             'facet_publication_status': {
@@ -382,6 +376,7 @@ RECORDS_REST_FACETS = {
             'cadi_status': terms_filter('cadi_status'),
             'achievements': terms_filter('achievements'),
             'publication_status': terms_filter('publication_status.keyword'),
+            'achievements': terms_filter('_achievements.achievements.keyword'),
             'conference': terms_filter('conference'),
             'physics_objects': nested_filter(
                 'main_measurements.signal_event_selection.physics_objects',

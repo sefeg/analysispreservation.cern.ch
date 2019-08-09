@@ -156,7 +156,7 @@ class BadgeHeaderPreview extends React.Component {
             >
               <Box
                 direction="column"
-                style={{ padding: "10px", "min-width": "50%" }}
+                style={{ padding: "10px", "min-width": "50%", width: "70%" }}
               >
                 <h3 style={{ "margin-bottom": "10px" }}>{this.props.title}</h3>
 

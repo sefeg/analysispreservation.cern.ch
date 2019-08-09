@@ -22,6 +22,22 @@
       "fundamental": {
         "type": "integer"
       },
+      "achievements": {
+        "items": [
+          {
+            "type": "string",
+            "enum": [
+              "Popular",
+              "Educational",
+              "Fundamental",
+              "Innovative",
+              "Reusable"
+            ]
+          }
+        ],
+        "type": "array",
+        "name": "achievements"
+      },
       "voters_id_educational": {
         "items": {
           "type": "integer"

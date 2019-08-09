@@ -40,14 +40,13 @@ class AboutPage extends React.Component {
                 first to fulfill this achievement.
                 <ul>
                   <li>
-                    <a href="https://cap-client.readthedocs.io/en/latest/?badge=latest#">
-                      Search for 3-lepton flavor in BSM models
+                    <a href="http://localhost:3000/drafts/f7820eda12374d8eacbfe3696142834f">
+                      EGM-13-001
                     </a>
                   </li>
                   <li>
-                    <a href="https://cap-client.readthedocs.io/en/latest/?badge=latest#">
-                      Some other awesome physics title that I do not know much
-                      about
+                    <a href="/drafts/fa8b41dcf8244b02800933c8491f0502">
+                      PAH-SE-1-112
                     </a>
                   </li>
                 </ul>
